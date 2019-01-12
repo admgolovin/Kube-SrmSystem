@@ -1,10 +1,14 @@
 FROM centos:latest
 Maintainer Stark
-COPY /DB /
-RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+COPY . /Project/
 RUN yum upgrade
 RUN yum update
 RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm --nogpgcheck
 RUN yum install -y python36u python36u-libs python36u-devel python36u-pip --nogpgcheck
-
+RUN python3.6 -m pip install flask
+RUN python3.6 -m pip install -r /Project/requirements.text
+RUN export LC_ALL=en_US.utf-8
+RUN export LANG=en_US.utf-8
+RUN export FLASK_APP=/Project/app/app.py
+CMD ["/bin/bash", "flask run -p 5002"]
 
