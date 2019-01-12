@@ -2,7 +2,7 @@ node {
   checkout scm
   sh "docker build -t admgolovin/jenkins:new ."
 }
-  steps {
+  stage {
       withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
         sh 'docker push admgolovin/myjenkins:StarkImage'
         }
