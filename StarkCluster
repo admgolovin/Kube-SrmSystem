@@ -1,0 +1,4 @@
+node {
+  checkout scm
+  sh "docker build -it admgolovin/jenkins:new ."
+}
