@@ -1,4 +1,4 @@
 node {
   checkout scm
-  sh "docker build -it admgolovin/jenkins:new ."
+  sh "docker build -t admgolovin/jenkins:new ."
 }
