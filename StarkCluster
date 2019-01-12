@@ -2,3 +2,9 @@ node {
   checkout scm
   sh "docker build -t admgolovin/jenkins:new ."
 }
+  stage('Push image') {
+    docker.withRegistry('https://cloud.docker.com/u/admgolovin/repository/docker/admgolovin/myjenkins', 'dockerhub') {
+        app.push("${env.BUILD_NUMBER}")
+        app.push("latest")
+        }
+    }
