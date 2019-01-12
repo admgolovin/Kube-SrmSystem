@@ -2,3 +2,9 @@ node {
   checkout scm
   sh "docker build -t admgolovin/jenkins:new ."
 }
+  stage(‘Building image’) {
+    steps{
+      script {
+        docker.build "admgolovin/myjenkins:StarkImage" + “:$BUILD_NUMBER” }
+      } 
+  }
