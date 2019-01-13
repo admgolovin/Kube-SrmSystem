@@ -2,6 +2,7 @@ apiVersion: v1
 kind: PodPreset
 metadata:
   name: Jenkins-config
+  namespace: stark-cluster
 spec:
   selector:
     matchLabels:
