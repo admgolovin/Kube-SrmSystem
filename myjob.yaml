@@ -1,4 +1,20 @@
 apiVersion: v1
+kind: PodPreset
+metadata:
+  name: Jenkins-config
+spec:
+  selector:
+    matchLabels:
+      service: jenkins
+  volumeMounts:
+    - mountPath: /var/lib/jenkins
+      name: jenkins-volume
+  volumes:
+    - name: jenkins-volume
+      emptyDir: {}
+---
+
+apiVersion: v1
 kind: Pod
 metadata:
   name: jenkins
@@ -31,4 +47,20 @@ spec:
   - protocol: TCP
     port: 8080
     targetPort: 8080
+  type: LoadBalancer
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: ssh
+  namespace: stark-cluster
+spec:
+  selector:
+    service: jenkins
+  ports:
+  - protocol: TCP
+    port: 22
+    targetPort: 22  
   type: LoadBalancer
