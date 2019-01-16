@@ -1,0 +1,22 @@
+FROM jenkins/jenkins:lts-alpine
+MAINTAINER ANTON & MAX
+
+ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+ 
+COPY security.groovy /usr/share/jenkins/ref/init.groovy.d/security.groovy
+ 
+COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+
+USER root
+RUN apk update && apk upgrade && apk add python3
+RUN apk add build-base
+RUN apk add py-setuptools
+RUN apk add python3-dev
+RUN apk add libevent-dev
+RUN pip3 install requests
+RUN pip3 install --upgrade pip
+RUN pip3 install pylint
+
+
+USER jenkins
